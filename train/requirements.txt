@@ -1,0 +1,7 @@
+numpy==1.24.4
+seaborn
+matplotlib
+tensorflow==2.11
+scikit-learn
+tensorflow-model-optimization
+tensorflow-addons

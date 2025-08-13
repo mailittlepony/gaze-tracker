@@ -1,0 +1,10 @@
+.DS_Store
+venv
+__pycache__
+down
+left
+right
+up
+straight
+venv39
+.python-version
