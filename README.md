@@ -10,11 +10,11 @@ This repository provides a gaze direction tracker that can detect five gaze dire
 You can download the pretrained models from the `pretrained_models` folder. The models achieve high accuracy on the test dataset:  
 
 | gaze_model.keras | 96% accuracy |
-![Confusion Matrix](assets/keras)
+![Confusion Matrix](./assets/keras.png)
 
 | gaze_model_qat_int8.tflite | 97% accuracy |
 
-![Confusion Matrix](assets/int8-tflite)
+![Confusion Matrix](./assets/int8-tflite.png)
 
 
 ## Training
