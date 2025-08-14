@@ -1,6 +1,6 @@
 # Gaze Tracker
 
-<video src="./assets/demo.mov" width="600" controls autoplay loop muted></video>
+![Demo GIF](./assets/demo.gif)
 
 ## Overview
 This repository provides a gaze direction tracker that can detect five gaze directions: `up`, `down`, `left`, `right`, and `straight`. You can either use the pretrained models provided, train your own models, or run the gaze tracker directly using the pretrained weights.
