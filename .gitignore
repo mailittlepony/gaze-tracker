@@ -8,3 +8,5 @@ up
 straight
 venv39
 .python-version
+src/FaceMobileNet_Float32.tflite
+src/gaze_model_qat_int8.tflite

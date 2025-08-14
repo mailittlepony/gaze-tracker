@@ -13,6 +13,7 @@ You can download the pretrained models from the `pretrained_models` folder. The 
 ![Confusion Matrix](./assets/keras.png)
 
 | gaze_model_qat_int8.tflite | 97% accuracy |
+> be careful when using this modelit is indeed in int8 weights but uses float32 input/output
 
 ![Confusion Matrix](./assets/int8-tflite.png)
 
