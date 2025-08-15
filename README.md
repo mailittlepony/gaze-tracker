@@ -3,7 +3,7 @@
 ![Demo GIF](./assets/demo.gif)
 
 ## Overview
-This repository provides a gaze direction tracker that can detect five gaze directions: `up`, `down`, `left`, `right`, and `straight`. You can either use the pretrained models provided, train your own models, or run the gaze tracker directly using the pretrained weights.
+This repository provides a gaze direction tracker that can detect five gaze directions: `up`, `down`, `left`, `right`, and `straight` and `blinking` state and `close`state. You can either use the pretrained models provided that only give the gaze direction, train your own models, or run the gaze tracker example directly that tracks all the eye states cited earlier along with a tracking mechanism that locks on the first person even if people are around or he leaves and comes back later or people trying to replace him.
 
 
 ## Pretrained Models
@@ -13,29 +13,29 @@ You can download the pretrained models from the `pretrained_models` folder. The 
 ![Confusion Matrix](./assets/keras.png)
 
 | gaze_model_qat_int8.tflite | 97% accuracy |
-> be careful when using this modelit is indeed in int8 weights but uses float32 input/output
+> Be careful when using this model, it is indeed in int8 weights but uses float32 input/output.
 
 ![Confusion Matrix](./assets/int8-tflite.png)
 
 
 ## Training
-If you prefer to train yourself, make sure you have installed the requirements in train/requirements.txt, python 3.9 and the dataset divided in the 5 folders in the data folder:
+If you prefer to train yourself, make sure you have installed the requirements in train/requirements.txt, python 3.9 and the dataset divided in the 5 folders in the data folder ([here](https://data.mendeley.com/datasets/vy4n28334m/1) the dataset I used):
 
 - training:
 
 ```bash
 # Basic training with default parameters
-python src/main.py --data-dir path/to/dataset
+python train/main.py --data-dir path/to/dataset
 
 ```
 ```bash
 # Training with custom batch size and number of epochs
-python src/main.py --data-dir path/to/dataset --batch 64 --epochs 30
+python train/main.py --data-dir path/to/dataset --batch 64 --epochs 30
 
 ```
 ```bash
 # Training and saving model to a custom path
-python src/main.py --data-dir path/to/dataset --save-path models/my_model.keras
+python train/main.py --data-dir path/to/dataset --save-path models/my_model.keras
 
 ```
 
@@ -43,7 +43,22 @@ python src/main.py --data-dir path/to/dataset --save-path models/my_model.keras
 
 ```bash
 #full command with batch, epochs, custom save path, and QAT
-python src/main.py --data-dir path/to/dataset --batch 32 --epochs 25 --save-path models/gaze_model.keras --qat --qat-output models/gaze_model_qat_int8.tflite
+python train/main.py --data-dir path/to/dataset --batch 32 --epochs 25 --save-path models/gaze_model.keras --qat --qat-output models/gaze_model_qat_int8.tflite
 
 ```
 ## Run gaze-tracker
+> Make sure you have the gaze model and a tracking model that I found from [sirius_ai's MobileFaceNet_TF](https://github.com/sirius-ai/MobileFaceNet_TF)
+
+- Then run the code:
+```bash
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+python src/example.py
+```
+you should have something like this:
+
+![Demo GIF](./assets/track.gif)
+
+- or use it in your own projects
+
