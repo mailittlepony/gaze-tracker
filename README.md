@@ -3,7 +3,42 @@
 ![Demo GIF](./assets/demo.gif)
 
 ## Overview
-This repository provides a gaze direction tracker that can detect five gaze directions: `up`, `down`, `left`, `right`, and `straight` and `blinking` state and `close`state. You can either use the pretrained models provided that only give the gaze direction, train your own models, or run the gaze tracker example directly that tracks all the eye states cited earlier along with a tracking mechanism that locks on the first person even if people are around or he leaves and comes back later or people trying to replace him.
+This repository provides a gaze direction tracker that can detect five gaze directions: `up`, `down`, `left`, `right`, and `straight` and `blinking` state and `closed`state. You can either use the pretrained models provided that only give the gaze direction, train your own models, or run the gaze tracker example directly that tracks all the eye states cited earlier along with an optional tracking mechanism that locks on the first person even if people are around or he leaves and comes back later or people trying to replace him.
+
+
+## Use gaze-tracker
+> Make sure you have the gaze model and a tracking model that I found from [sirius_ai's MobileFaceNet_TF](https://github.com/sirius-ai/MobileFaceNet_TF)
+
+- First make sure you have the requiremetns:
+```bash
+python -m venv venv
+source venv/bin/activate
+pip install -r requirements.txt
+```
+
+- You can enable the tracking to the first person:
+```bash
+tracker = GazeTracker(enable_tracking=True) # or to False if you want it to switch to whoever is detected first
+```
+
+- You can use it headless with:
+```bash
+state = tracker.get_eye_state(frame)
+print("Eye state:", state)
+```
+
+- Or draw a preview:
+```bash
+frame = tracker.draw_preview(frame, state)
+```
+
+- Or run the example:
+```bash
+python src/example.py
+```
+you should have something like this:
+
+![Demo GIF](./assets/track.gif)
 
 
 ## Pretrained Models
@@ -46,19 +81,4 @@ python train/main.py --data-dir path/to/dataset --save-path models/my_model.kera
 python train/main.py --data-dir path/to/dataset --batch 32 --epochs 25 --save-path models/gaze_model.keras --qat --qat-output models/gaze_model_qat_int8.tflite
 
 ```
-## Run gaze-tracker
-> Make sure you have the gaze model and a tracking model that I found from [sirius_ai's MobileFaceNet_TF](https://github.com/sirius-ai/MobileFaceNet_TF)
-
-- Then run the code:
-```bash
-python -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-python src/example.py
-```
-you should have something like this:
-
-![Demo GIF](./assets/track.gif)
-
-- or use it in your own projects
 
