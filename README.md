@@ -7,7 +7,7 @@ This repository provides a gaze direction tracker that can detect five gaze dire
 
 
 ## Use gaze-tracker
-> Make sure you have the gaze model and a tracking model that I found from [sirius_ai's MobileFaceNet_TF](https://github.com/sirius-ai/MobileFaceNet_TF) in a `models` folder
+> Make sure you have the gaze model and a tracking model that I found from [sirius_ai's MobileFaceNet_TF](https://github.com/sirius-ai/MobileFaceNet_TF) in a same folder
 
 - Then clone the repository:
 ```bash
@@ -28,7 +28,7 @@ from gaze_tracker import GazeTracker
 
 - You can enable the tracking to the first person:
 ```bash
-tracker = GazeTracker(enable_tracking=True) # or to False if you want it to switch to whoever is detected first
+tracker = GazeTracker(enable_tracking=True, model_dir="model_folder_dir") # or to False if you want it to switch to whoever is detected first
 ```
 
 - You can use it headless with:

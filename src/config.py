@@ -9,8 +9,8 @@ IMG_SIZE = (64, 64)
 CLASS_NAMES = ['down', 'left', 'right', 'straight', 'up']
 
 # Models
-TFLITE_MODEL_PATH = "models/gaze_model_qat_int8.tflite"
-FACE_REC_MODEL_PATH = "models/FaceMobileNet_Float32.tflite"
+TFLITE_MODEL_PATH = "gaze_model_qat_int8.tflite"
+FACE_REC_MODEL_PATH = "FaceMobileNet_Float32.tflite"
 
 # Eye state
 SMOOTHING_FRAMES = 15

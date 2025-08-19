@@ -8,13 +8,16 @@
 import cv2
 import mediapipe as mp
 from collections import deque
-from src.utils import align_face, crop_left_eye, preprocess_eye, eye_aspect_ratio
-from src.models import predict_gaze, get_face_embedding
-from src.tracking import update_embeddings
-from src.config import *
+import sys
+from pathlib import Path
+
+from gaze_tracker.src.utils import align_face, crop_left_eye, preprocess_eye, eye_aspect_ratio
+from gaze_tracker.src.models import predict_gaze, get_face_embedding, load_models
+from gaze_tracker.src.tracking import update_embeddings
+from gaze_tracker.src.config import *
 
 class GazeTracker:
-    def __init__(self, smoothing=SMOOTHING_FRAMES, enable_tracking=False):
+    def __init__(self, smoothing=SMOOTHING_FRAMES, enable_tracking=False, model_dir="models"):
         self.enable_tracking = enable_tracking
 
         self.mp_face_mesh = mp.solutions.face_mesh
@@ -31,6 +34,7 @@ class GazeTracker:
 
         self.tracked_face_landmarks = None
         self.tracking_active = False
+        load_models(model_dir)
 
     def get_eye_state(self, frame):
         """Returns current eye state: 'down', 'left', 'right', 'straight', 'up', 'blinking', 'closed', 'no_face'."""

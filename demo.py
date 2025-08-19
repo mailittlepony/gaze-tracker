@@ -11,7 +11,7 @@ from gaze_tracker import GazeTracker
 
 logging.basicConfig(level=logging.INFO)
 
-tracker = GazeTracker(enable_tracking=True)
+tracker = GazeTracker(enable_tracking=True, model_dir="gaze_tracker/models")
 cap = cv2.VideoCapture(0)
 
 try:
