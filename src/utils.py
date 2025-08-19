@@ -22,7 +22,7 @@ def umeyama(src, dst, estimate_scale=True):
         Vt[-1, :] *= -1
         R = U @ Vt
     if estimate_scale:
-        var_src = (src_demean ** 2).sum() / src.shape[0]   # <-- FIXED
+        var_src = (src_demean ** 2).sum() / src.shape[0]  
         scale = S.sum() / var_src
     else:
         scale = 1.0
@@ -48,18 +48,30 @@ def align_face(frame, landmarks):
 def crop_left_eye(frame, landmarks):
     h, w, _ = frame.shape
     indices = [362, 263, 387, 386, 385, 384, 398, 382, 381, 380, 374, 373, 390, 249]
-    x_coords = [int(landmarks[i].x * w) for i in indices]
-    y_coords = [int(landmarks[i].y * h) for i in indices]
 
-    x_min, x_max, y_min, y_max = min(x_coords), max(x_coords), min(y_coords), max(y_coords)
+    x_coords = np.array([landmarks[i].x * w for i in indices])
+    y_coords = np.array([landmarks[i].y * h for i in indices])
+
+    left_corner = np.array([landmarks[362].x * w, landmarks[362].y * h])
+    right_corner = np.array([landmarks[263].x * w, landmarks[263].y * h])
+    cx, cy = np.mean(x_coords), np.mean(y_coords)
+    angle = np.degrees(np.arctan2(right_corner[1] - left_corner[1], right_corner[0] - left_corner[0]))
+
+    cos_a = np.cos(-np.radians(angle))
+    sin_a = np.sin(-np.radians(angle))
+    x_rot = cos_a * (x_coords - cx) - sin_a * (y_coords - cy) + cx
+    y_rot = sin_a * (x_coords - cx) + cos_a * (y_coords - cy) + cy
+
+    x_min, x_max = int(np.min(x_rot)), int(np.max(x_rot))
+    y_min, y_max = int(np.min(y_rot)), int(np.max(y_rot))
     box_size = max(x_max - x_min, y_max - y_min)
-    cx, cy = (x_min + x_max) // 2, (y_min + y_max) // 2
+    
     pad_top, pad_bottom, pad_side = int(0.5 * box_size), int(0.2 * box_size), int(0.3 * box_size)
+    x_min_new, x_max_new = max(int(cx - box_size // 2 - pad_side), 0), min(int(cx + box_size // 2 + pad_side), w)
+    y_min_new, y_max_new = max(int(cy - box_size // 2 - pad_top), 0), min(int(cy + box_size // 2 + pad_bottom), h)
 
-    x_min_new, x_max_new = max(cx - box_size // 2 - pad_side, 0), min(cx + box_size // 2 + pad_side, w)
-    y_min_new, y_max_new = max(cy - box_size // 2 - pad_top, 0), min(cy + box_size // 2 + pad_bottom, h)
-
-    return frame[y_min_new:y_max_new, x_min_new:x_max_new], (x_min_new, y_min_new, x_max_new, y_max_new)
+    eye_img = frame[y_min_new:y_max_new, x_min_new:x_max_new]
+    return eye_img, (x_min_new, y_min_new, x_max_new, y_max_new)
 
 
 def preprocess_eye(eye_img):

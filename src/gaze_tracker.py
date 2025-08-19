@@ -48,6 +48,7 @@ class GazeTracker:
             return "no_face"
 
         if self.enable_tracking:
+            matched = False
             for face_landmarks in results.multi_face_landmarks:
                 try:
                     aligned = align_face(frame, face_landmarks.landmark)
@@ -56,9 +57,14 @@ class GazeTracker:
                     if status in ["lock_init", "match", "update"]:
                         self.tracked_face_landmarks = face_landmarks.landmark
                         self.tracking_active = True
+                        matched = True
                         break
                 except Exception:
                     continue
+
+            if not matched:
+                self.tracked_face_landmarks = None
+                self.tracking_active = False
         else:
             self.tracked_face_landmarks = results.multi_face_landmarks[0].landmark
             self.tracking_active = True
