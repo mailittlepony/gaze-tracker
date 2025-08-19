@@ -7,7 +7,7 @@
 
 import cv2
 import numpy as np
-from config import TEMPLATE_5PTS, OUT_SIZE, LMK_ID_5PTS, IMG_SIZE
+from .config import TEMPLATE_5PTS, OUT_SIZE, LMK_ID_5PTS, IMG_SIZE
 
 
 def umeyama(src, dst, estimate_scale=True):

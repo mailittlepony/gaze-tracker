@@ -7,15 +7,20 @@
 
 import cv2
 import numpy as np
-import tensorflow as tf
-from config import TFLITE_MODEL_PATH, FACE_REC_MODEL_PATH
+try:
+    from tflite_runtime.interpreter import Interpreter
+except ImportError:
+    import tensorflow as tf
+    Interpreter = tf.lite.Interpreter
+
+from .config import TFLITE_MODEL_PATH, FACE_REC_MODEL_PATH
 
 
-gaze_interpreter = tf.lite.Interpreter(model_path=TFLITE_MODEL_PATH)
+gaze_interpreter = Interpreter(model_path=TFLITE_MODEL_PATH)
 gaze_interpreter.allocate_tensors()
 gaze_input, gaze_output = gaze_interpreter.get_input_details(), gaze_interpreter.get_output_details()
 
-face_interpreter = tf.lite.Interpreter(model_path=FACE_REC_MODEL_PATH)
+face_interpreter = Interpreter(model_path=FACE_REC_MODEL_PATH)
 face_interpreter.allocate_tensors()
 face_input, face_output = face_interpreter.get_input_details(), face_interpreter.get_output_details()
 

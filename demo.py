@@ -5,9 +5,9 @@
 #
 # Distributed under terms of the MIT license.
 
-from gaze_tracker import GazeTracker
 import logging
 import cv2
+from gaze_tracker import GazeTracker
 
 logging.basicConfig(level=logging.INFO)
 

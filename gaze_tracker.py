@@ -8,10 +8,10 @@
 import cv2
 import mediapipe as mp
 from collections import deque
-from utils import align_face, crop_left_eye, preprocess_eye, eye_aspect_ratio
-from models import predict_gaze, get_face_embedding
-from tracking import update_embeddings
-from config import *
+from src.utils import align_face, crop_left_eye, preprocess_eye, eye_aspect_ratio
+from src.models import predict_gaze, get_face_embedding
+from src.tracking import update_embeddings
+from src.config import *
 
 class GazeTracker:
     def __init__(self, smoothing=SMOOTHING_FRAMES, enable_tracking=False):

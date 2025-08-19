@@ -6,7 +6,7 @@
 # Distributed under terms of the MIT license.
 
 import numpy as np
-from config import INITIAL_LOCK_FRAMES, MAX_EMBEDDINGS, MATCH_SIM_THRESHOLD, UPDATE_SIM_THRESHOLD
+from .config import INITIAL_LOCK_FRAMES, MAX_EMBEDDINGS, MATCH_SIM_THRESHOLD, UPDATE_SIM_THRESHOLD
 
 locked_face_embeddings = []
 
