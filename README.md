@@ -3,17 +3,27 @@
 ![Demo GIF](./assets/demo.gif)
 
 ## Overview
-This repository provides a gaze direction tracker that can detect five gaze directions: `up`, `down`, `left`, `right`, and `straight` and `blinking` state and `closed`state. You can either use the pretrained models provided that only give the gaze direction, train your own models, or run the gaze tracker example directly that tracks all the eye states cited earlier along with an optional tracking mechanism that locks on the first person even if people are around or he leaves and comes back later or people trying to replace him.
+This repository provides a gaze direction tracker that can detect five gaze directions: `up`, `down`, `left`, `right`, and `straight` and `blinking` state and `closed`state. You can use the provided pretrained models for gaze direction only, train your own models, or run the gaze tracker example that tracks all the eye states mentioned above, with an optional tracking mechanism that locks on the first detected person even if people are around or he leaves and comes back later or people trying to replace him.
 
 
 ## Use gaze-tracker
-> Make sure you have the gaze model and a tracking model that I found from [sirius_ai's MobileFaceNet_TF](https://github.com/sirius-ai/MobileFaceNet_TF)
+> Make sure you have the gaze model and a tracking model that I found from [sirius_ai's MobileFaceNet_TF](https://github.com/sirius-ai/MobileFaceNet_TF) in a `models` folder
 
-- First make sure you have the requiremetns:
+- Then clone the repository:
+```bash
+git clone https://github.com/mailittlepony/gaze-tracker
+```
+
+- Make sure you have the requirements:
 ```bash
 python -m venv venv
 source venv/bin/activate
 pip install -r requirements.txt
+```
+
+- Then you can import the module in your project like this:
+```bash
+from gaze_tracker import GazeTracker
 ```
 
 - You can enable the tracking to the first person:
@@ -32,9 +42,9 @@ print("Eye state:", state)
 frame = tracker.draw_preview(frame, state)
 ```
 
-- Or run the example:
+- Or run the example/demo:
 ```bash
-python src/example.py
+python demo.py
 ```
 you should have something like this:
 
@@ -48,7 +58,7 @@ You can download the pretrained models from the `pretrained_models` folder. The 
 ![Confusion Matrix](./assets/keras.png)
 
 | gaze_model_qat_int8.tflite | 97% accuracy |
-> Be careful when using this model, it is indeed in int8 weights but uses float32 input/output.
+> Note: The int8 model uses float32 input/output despite the int8 weights.
 
 ![Confusion Matrix](./assets/int8-tflite.png)
 
