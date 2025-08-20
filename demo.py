@@ -5,13 +5,20 @@
 #
 # Distributed under terms of the MIT license.
 
+import sys
+import os
+sys.path.insert(0, os.path.abspath(".."))
+# Do not put this in your script if outside the repository
+
 import logging
 import cv2
 from gaze_tracker import GazeTracker
 
 logging.basicConfig(level=logging.INFO)
 
-tracker = GazeTracker(enable_tracking=True, model_dir="gaze_tracker/models")
+tracker = GazeTracker(enable_tracking=True, model_dir="models")
+# model_dir="gaze_tracker/models" in your script
+
 cap = cv2.VideoCapture(0)
 
 try:

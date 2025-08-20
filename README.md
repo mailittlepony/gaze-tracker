@@ -11,7 +11,7 @@ This repository provides a gaze direction tracker that can detect five gaze dire
 
 - Then clone the repository:
 ```bash
-git clone https://github.com/mailittlepony/gaze-tracker
+git clone https://github.com/mailittlepony/gaze_tracker
 ```
 
 - Make sure you have the requirements:
