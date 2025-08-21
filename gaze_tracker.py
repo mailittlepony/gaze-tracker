@@ -8,13 +8,12 @@
 import cv2
 import mediapipe as mp
 from collections import deque
-import sys
-from pathlib import Path
 
 from gaze_tracker.src.utils import align_face, crop_left_eye, preprocess_eye, eye_aspect_ratio
 from gaze_tracker.src.models import predict_gaze, get_face_embedding, load_models
 from gaze_tracker.src.tracking import update_embeddings
 from gaze_tracker.src.config import *
+
 
 class GazeTracker:
     def __init__(self, smoothing=SMOOTHING_FRAMES, enable_tracking=False, model_dir="models"):
@@ -35,6 +34,7 @@ class GazeTracker:
         self.tracked_face_landmarks = None
         self.tracking_active = False
         load_models(model_dir)
+
 
     def get_eye_state(self, frame):
         """Returns current eye state: 'down', 'left', 'right', 'straight', 'up', 'blinking', 'closed', 'no_face'."""
@@ -107,11 +107,28 @@ class GazeTracker:
 
         return gaze_label
 
-    def draw_preview(self, frame, gaze_label):
+
+    def draw_bbox(self, frame, gaze_label):
         """Draws bounding box and gaze label for debugging."""
         if self.tracking_active and self.tracked_face_landmarks:
             _, (x_min, y_min, x_max, y_max) = crop_left_eye(frame, self.tracked_face_landmarks)
             cv2.rectangle(frame, (x_min, y_min), (x_max, y_max), (0, 255, 0), 2)
             cv2.putText(frame, gaze_label, (32, 30), cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0,0,0), 2)
         return frame
+
+
+    def get_landmarks(self):
+        """Return landmarks from the last processed frame.
+        Call get_eye_state(frame) or process_frame(frame) first."""
+        return self.tracked_face_landmarks
+
+
+    def select_landmarks(self, indices):
+        """
+        Returns only the selected landmarks from the last tracked face.
+        indices: list of integers
+        """
+        if self.tracked_face_landmarks is None:
+            return None
+        return [self.tracked_face_landmarks[i] for i in indices if 0 <= i < len(self.tracked_face_landmarks)]
 
